@@ -1,3 +1,5 @@
+import json
+import os
 from quiz import Quiz
 
 DEFAULT_QUIZZES = [
@@ -201,3 +203,32 @@ def show_score(self):
         return
 
     print(f"\n🏆 최고 점수: {self.best_score}점")
+
+def save(self):
+    try:
+        data = {
+            "quizzes": [quiz.to_dict() for quiz in self.quizzes],
+            "best_score": self.best_score
+        }
+        with open("state.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"⚠️ 저장 중 오류가 발생했습니다: {e}")
+
+def load(self):
+    if not os.path.exists("state.json"):
+        print("📂 기본 퀴즈 데이터로 시작합니다.")
+        return
+
+    try:
+        with open("state.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+        self.quizzes = [Quiz.from_dict(q) for q in data["quizzes"]]
+        self.best_score = data["best_score"]
+        print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score}점)")
+    except (json.JSONDecodeError, KeyError):
+        print("⚠️ 데이터 파일이 손상되었습니다. 기본 퀴즈 데이터로 초기화합니다.")
+        self.quizzes = DEFAULT_QUIZZES[:]
+        self.best_score = 0
+    except Exception as e:
+        print(f"⚠️ 불러오기 중 오류가 발생했습니다: {e}")
