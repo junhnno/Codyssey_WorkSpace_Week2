@@ -134,3 +134,50 @@ def play(self):
 
     print(f"========================================")
     self.save()
+
+
+def add_quiz(self):
+    print("\n📌 새로운 퀴즈를 추가합니다.")
+
+    question = input("문제를 입력하세요: ").strip()
+    if question == "":
+        print("⚠️ 문제를 입력해야 합니다.")
+        return
+
+    choices = []
+    for i in range(1, 5):
+        while True:
+            choice = input(f"선택지 {i}: ").strip()
+            if choice == "":
+                print("⚠️ 선택지를 입력해야 합니다.")
+                continue
+            choices.append(choice)
+            break
+
+    while True:
+        try:
+            answer = input("정답 번호 (1-4): ").strip()
+
+            if answer == "":
+                print("⚠️ 입력값이 없습니다. 1-4 사이의 숫자를 입력하세요.")
+                continue
+            if not answer.isdigit():
+                print("⚠️ 잘못된 입력입니다. 1-4 사이의 숫자를 입력하세요.")
+                continue
+
+            answer = int(answer)
+
+            if answer < 1 or answer > 4:
+                print("⚠️ 잘못된 입력입니다. 1-4 사이의 숫자를 입력하세요.")
+                continue
+
+            break
+
+        except KeyboardInterrupt:
+            print("\n\n퀴즈 추가를 취소합니다.")
+            return
+
+    new_quiz = Quiz(question, choices, answer)
+    self.quizzes.append(new_quiz)
+    self.save()
+    print("✅ 퀴즈가 추가되었습니다!")
