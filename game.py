@@ -193,3 +193,11 @@ def show_list(self):
     for i, quiz in enumerate(self.quizzes, start=1):
         print(f"[{i}] {quiz.question}")
     print("----------------------------------------")
+
+
+def show_score(self):
+    if self.best_score == 0:
+        print("\n⚠️ 아직 퀴즈를 풀지 않았습니다.")
+        return
+
+    print(f"\n🏆 최고 점수: {self.best_score}점")
