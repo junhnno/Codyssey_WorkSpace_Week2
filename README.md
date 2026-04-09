@@ -47,3 +47,5 @@ quiz-game/
     "best_score": 80
 }
 ```
+
+## 감사합니다!
