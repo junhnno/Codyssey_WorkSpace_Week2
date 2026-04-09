@@ -181,3 +181,15 @@ def add_quiz(self):
     self.quizzes.append(new_quiz)
     self.save()
     print("✅ 퀴즈가 추가되었습니다!")
+
+
+def show_list(self):
+    if not self.quizzes:
+        print("⚠️ 등록된 퀴즈가 없습니다.")
+        return
+
+    print(f"\n📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+    print("----------------------------------------")
+    for i, quiz in enumerate(self.quizzes, start=1):
+        print(f"[{i}] {quiz.question}")
+    print("----------------------------------------")
