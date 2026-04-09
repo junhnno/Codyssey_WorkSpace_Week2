@@ -30,7 +30,7 @@ DEFAULT_QUIZZES = [
 
 def show_menu(self):
     print("\n========================================")
-    print("        🎯 준호에 대해 얼마나 알아? 🎯")
+    print("         저에 대해서 맞춰보세요 ")
     print("========================================")
     print("1. 퀴즈 풀기")
     print("2. 퀴즈 추가")
@@ -77,3 +77,60 @@ def run(self):
             print("\n\n입력 스트림이 종료되었습니다.")
             self.save()
             break
+
+
+def play(self):
+    if not self.quizzes:
+        print("⚠️ 등록된 퀴즈가 없습니다.")
+        return
+
+    print(f"\n📝 퀴즈를 시작합니다! (총 {len(self.quizzes)}문제)")
+    score = 0
+
+    for i, quiz in enumerate(self.quizzes, start=1):
+        print(f"\n----------------------------------------")
+        print(f"[문제 {i}]")
+        quiz.display()
+
+        while True:
+            try:
+                user_input = input("\n정답 입력: ").strip()
+
+                if user_input == "":
+                    print("⚠️ 입력값이 없습니다. 1-4 사이의 숫자를 입력하세요.")
+                    continue
+                if not user_input.isdigit():
+                    print("⚠️ 잘못된 입력입니다. 1-4 사이의 숫자를 입력하세요.")
+                    continue
+
+                user_input = int(user_input)
+
+                if user_input < 1 or user_input > 4:
+                    print("⚠️ 잘못된 입력입니다. 1-4 사이의 숫자를 입력하세요.")
+                    continue
+
+                break
+
+            except KeyboardInterrupt:
+                print("\n\n퀴즈를 종료합니다.")
+                self.save()
+                return
+
+        if quiz.check_answer(user_input):
+            print("✅ 정답입니다!")
+            score += 1
+        else:
+            print(f"❌ 오답입니다! 정답은 {quiz.answer}번입니다.")
+
+    total = len(self.quizzes)
+    percent = int(score / total * 100)
+
+    print(f"\n========================================")
+    print(f"🏆 결과: {total}문제 중 {score}문제 정답! ({percent}점)")
+
+    if percent > self.best_score:
+        self.best_score = percent
+        print("🎉 새로운 최고 점수입니다!")
+
+    print(f"========================================")
+    self.save()
