@@ -52,6 +52,15 @@ quiz-game/
 }
 ```
 
+### main.py
+```
+from game import QuizGame
+
+if __name__ == "__main__":
+    game = QuizGame()
+    game.load()
+    game.run()
+```
 ## game.py
 ```
 import json
@@ -326,6 +335,38 @@ class QuizGame:
             self.best_score = 0
         except Exception as e:
             print(f"⚠️ 불러오기 중 오류가 발생했습니다: {e}")
+```
+
+##quiz.py
+```
+class Quiz:
+    def __init__(self, question, choices, answer):
+        self.question = question
+        self.choices = choices
+        self.answer = answer
+
+    def display(self):
+        print(f"\n{self.question}\n")
+        for i, choice in enumerate(self.choices, start=1):
+            print(f"  {i}. {choice}")
+
+    def check_answer(self, user_input):
+        return user_input == self.answer
+
+    def to_dict(self):
+        return {
+            "question": self.question,
+            "choices": self.choices,
+            "answer": self.answer
+        }
+
+    @staticmethod
+    def from_dict(data):
+        return Quiz(
+            question=data["question"],
+            choices=data["choices"],
+            answer=data["answer"]
+        )
 ```
 
 ## 감사합니다!
