@@ -24,7 +24,7 @@ python main.py
 | 점수 확인 | 최고 점수 확인 |
 
 ## 파일 구조
-'''
+```
 quiz-game/
 ├── main.py       # 진입점
 ├── quiz.py       # Quiz 클래스
@@ -32,7 +32,7 @@ quiz-game/
 ├── state.json    # 데이터 저장 파일 (자동 생성)
 ├── .gitignore
 └── README.md
-'''
+```
 
 ## 데이터 파일 설명 (state.json)
 - **경로**: 프로젝트 루트/state.json
